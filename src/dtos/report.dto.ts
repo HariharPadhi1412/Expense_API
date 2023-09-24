@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   IsNotEmpty,
   IsNumber,
@@ -5,6 +6,7 @@ import {
   IsPositive,
   IsString,
 } from 'class-validator';
+import { ReportType } from 'src/data';
 
 export class ReportDTO {
   @IsNumber()
@@ -26,4 +28,15 @@ export class UpdateReportDTO {
   @IsString()
   @IsNotEmpty()
   source: string;
+}
+
+export class ReportResponseDTO {
+  id: string;
+  source: string;
+  amount: number;
+  created_at: Date;
+
+  @Exclude()
+  updated_at: Date;
+  type: ReportType;
 }

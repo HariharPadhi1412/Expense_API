@@ -11,14 +11,20 @@ import {
 import { ReportType } from './data';
 import { AppService } from './app.service';
 import { ParseEnumPipe, ParseUUIDPipe } from '@nestjs/common';
-import { ReportDTO, UpdateReportDTO } from './dtos/report.dto';
+import {
+  ReportDTO,
+  ReportResponseDTO,
+  UpdateReportDTO,
+} from './dtos/report.dto';
 
 @Controller('report/:type')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getAllReport(@Param('type', new ParseEnumPipe(ReportType)) type: string) {
+  getAllReport(
+    @Param('type', new ParseEnumPipe(ReportType)) type: string,
+  ): ReportResponseDTO[] {
     const reportType =
       type === 'income' ? ReportType.INCOME : ReportType.EXPENSE;
 
@@ -29,7 +35,7 @@ export class AppController {
   getReportByID(
     @Param('type', new ParseEnumPipe(ReportType)) type: string,
     @Param('id', ParseUUIDPipe) id: string,
-  ) {
+  ): ReportResponseDTO {
     const reportType =
       type === 'income' ? ReportType.INCOME : ReportType.EXPENSE;
 
@@ -40,7 +46,7 @@ export class AppController {
   createReport(
     @Body() { amount, source }: ReportDTO,
     @Param('type', new ParseEnumPipe(ReportType)) type: string,
-  ) {
+  ): ReportResponseDTO {
     const reportType =
       type === 'income' ? ReportType.INCOME : ReportType.EXPENSE;
 
@@ -52,7 +58,7 @@ export class AppController {
     @Param('type', new ParseEnumPipe(ReportType)) type: string,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() body: UpdateReportDTO,
-  ) {
+  ): ReportResponseDTO {
     const reportType =
       type === 'income' ? ReportType.INCOME : ReportType.EXPENSE;
 
