@@ -8,10 +8,10 @@ import {
   Body,
   HttpCode,
 } from '@nestjs/common/decorators';
-import { v4 as uuid } from 'uuid';
-import { ReportType, data } from './data';
+import { ReportType } from './data';
 import { AppService } from './app.service';
 import { ParseEnumPipe, ParseUUIDPipe } from '@nestjs/common';
+import { ReportDTO } from './dtos/report.dto';
 
 @Controller('report/:type')
 export class AppController {
@@ -38,7 +38,7 @@ export class AppController {
 
   @Post()
   createReport(
-    @Body() { amount, source }: { amount: number; source: string },
+    @Body() { amount, source }: ReportDTO,
     @Param('type', new ParseEnumPipe(ReportType)) type: string,
   ) {
     const reportType =
