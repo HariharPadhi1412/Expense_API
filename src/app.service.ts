@@ -16,13 +16,19 @@ interface UpdateReport {
 @Injectable()
 export class AppService {
   getAllReport(type: ReportType): ReportResponseDTO[] {
-    return data.report.filter((report) => report.type === type);
+    return data.report
+      .filter((report) => report.type === type)
+      .map((report) => new ReportResponseDTO(report));
   }
 
   getReportByID(type: ReportType, id: string): ReportResponseDTO {
-    return data.report
+    const report = data.report
       .filter((report) => report.type === type)
       .find((report) => report.id === id);
+
+    if (!report) return;
+
+    return new ReportResponseDTO(report);
   }
 
   createReport(
@@ -39,7 +45,7 @@ export class AppService {
     };
 
     data.report.push(newReport);
-    return newReport;
+    return new ReportResponseDTO(newReport);
   }
 
   updateReport(
@@ -63,7 +69,7 @@ export class AppService {
       updated_at: new Date(),
     };
 
-    return data.report[reportIndex];
+    return new ReportResponseDTO(data.report[reportIndex]);
   }
 
   deleteReport(id: string) {
