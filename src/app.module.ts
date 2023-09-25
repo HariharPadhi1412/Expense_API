@@ -3,12 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { SummaryModule } from './summary/summary.module';
-import { ServiceController } from './service/service.controller';
 import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [SummaryModule, ReportModule],
-  controllers: [AppController, ServiceController],
+  controllers: [AppController],
   providers: [
     AppService,
     { provide: APP_INTERCEPTOR, useClass: ClassSerializerInterceptor },
